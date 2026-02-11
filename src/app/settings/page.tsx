@@ -175,7 +175,7 @@ export default function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-copper-400" />
       </div>
     );
   }
@@ -184,22 +184,22 @@ export default function SettingsPage() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-neutral-400 mt-1">Configure your flow preferences</p>
+        <p className="text-muted-foreground mt-1">Configure your flow preferences</p>
       </div>
 
       {/* Timezone auto-detection prompt */}
       {showTimezonePrompt && (
-        <Card className="bg-orange-950/30 border-orange-800/50">
+        <Card className="bg-copper-50 border-copper-200">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
-              <div className="p-2 bg-orange-900/50 rounded-lg">
-                <MapPin className="h-5 w-5 text-orange-400" />
+              <div className="p-2 bg-copper-100 rounded-lg">
+                <MapPin className="h-5 w-5 text-copper-500" />
               </div>
               <div className="flex-1 space-y-3">
                 <div>
-                  <h3 className="font-semibold text-orange-200">Timezone Detected</h3>
-                  <p className="text-sm text-orange-300/70 mt-1">
-                    Your browser says you&apos;re in <strong className="text-orange-200">{formatTimezoneLabel(detectedTimezone)}</strong>.
+                  <h3 className="font-semibold text-copper-700">Timezone Detected</h3>
+                  <p className="text-sm text-copper-600/80 mt-1">
+                    Your browser says you&apos;re in <strong className="text-copper-700">{formatTimezoneLabel(detectedTimezone)}</strong>.
                     {settings.timezone && settings.timezone !== detectedTimezone && (
                       <> Your current setting is {formatTimezoneLabel(settings.timezone)}.</>
                     )}
@@ -209,7 +209,7 @@ export default function SettingsPage() {
                   <Button
                     onClick={handleAcceptTimezone}
                     size="sm"
-                    className="bg-orange-600 hover:bg-orange-700 text-white"
+                    className="bg-copper-500 hover:bg-copper-600 text-white"
                   >
                     <Check className="h-4 w-4 mr-1" />
                     Use {formatTimezoneLabel(detectedTimezone)}
@@ -221,7 +221,7 @@ export default function SettingsPage() {
                     }}
                     size="sm"
                     variant="outline"
-                    className="border-orange-800 text-orange-300 hover:bg-orange-900/50"
+                    className="border-copper-300 text-copper-600 hover:bg-copper-50"
                   >
                     Keep Current
                   </Button>
@@ -232,15 +232,15 @@ export default function SettingsPage() {
         </Card>
       )}
 
-      <Card className="bg-neutral-900 border-neutral-800">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Globe className="h-5 w-5 text-orange-400" />
+            <Globe className="h-5 w-5 text-copper-500" />
             Timezone
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <p className="text-sm text-neutral-400">
+          <p className="text-sm text-muted-foreground">
             Your timezone determines when notifications arrive and how your schedule is displayed.
           </p>
           <select
@@ -248,7 +248,7 @@ export default function SettingsPage() {
             onChange={(e) =>
               setSettings((s) => ({ ...s, timezone: e.target.value }))
             }
-            className="w-full bg-neutral-800 border border-neutral-700 text-neutral-50 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+            className="w-full bg-white border border-border text-foreground rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-copper-400 focus:border-transparent"
           >
             {/* If the current timezone isn't in any group, show it at the top */}
             {settings.timezone &&
@@ -268,7 +268,7 @@ export default function SettingsPage() {
             ))}
           </select>
           {timezoneDetected && !showTimezonePrompt && (
-            <p className="text-xs text-green-400/70 flex items-center gap-1">
+            <p className="text-xs text-moss-500/70 flex items-center gap-1">
               <Check className="h-3 w-3" />
               Timezone set to {formatTimezoneLabel(settings.timezone)}
             </p>
@@ -276,7 +276,7 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      <Card className="bg-neutral-900 border-neutral-800">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle>Schedule</CardTitle>
         </CardHeader>
@@ -293,9 +293,9 @@ export default function SettingsPage() {
                     wakeNotificationTime: e.target.value,
                   }))
                 }
-                className="bg-neutral-800 border-neutral-700 text-neutral-50"
+                className="bg-white border-border text-foreground"
               />
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-muted-foreground">
                 When the &quot;Ready to flow?&quot; Telegram message arrives
               </p>
             </div>
@@ -310,9 +310,9 @@ export default function SettingsPage() {
                     eodReminderTime: e.target.value,
                   }))
                 }
-                className="bg-neutral-800 border-neutral-700 text-neutral-50"
+                className="bg-white border-border text-foreground"
               />
-              <p className="text-xs text-neutral-500">
+              <p className="text-xs text-muted-foreground">
                 When the EOD review + activation prep reminder arrives
               </p>
             </div>
@@ -328,8 +328,8 @@ export default function SettingsPage() {
                   onClick={() => setSettings((s) => ({ ...s, breakDuration: mins }))}
                   className={`px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
                     settings.breakDuration === mins
-                      ? "border-orange-500 bg-orange-500/10 text-orange-300"
-                      : "border-neutral-700 bg-neutral-800 text-neutral-400 hover:border-neutral-600"
+                      ? "border-copper-400 bg-copper-50 text-copper-700"
+                      : "border-border bg-white text-muted-foreground hover:border-copper-300"
                   }`}
                 >
                   {mins} min
@@ -344,7 +344,7 @@ export default function SettingsPage() {
                     breakDuration: Math.max(5, Math.min(60, parseInt(e.target.value) || 15)),
                   }))
                 }
-                className="bg-neutral-800 border-neutral-700 text-neutral-50 w-20"
+                className="bg-white border-border text-foreground w-20"
                 min={5}
                 max={60}
               />
@@ -353,16 +353,16 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
 
-      <Card className="bg-neutral-900 border-neutral-800">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle>Telegram Bot</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-neutral-400">
+          <p className="text-sm text-muted-foreground">
             Your Telegram bot is connected. Chat with it to manage tasks, generate plans, and get coaching.
           </p>
-          <div className="p-4 rounded-lg bg-neutral-800/50 border border-neutral-700">
-            <p className="text-sm text-neutral-300">
+          <div className="p-4 rounded-lg bg-muted/50 border border-border">
+            <p className="text-sm text-foreground">
               <strong>Quick tip:</strong> Just chat naturally with your bot — say things like
               &quot;add a new project called X&quot; or &quot;I want to work 4 hours today&quot;.
               No special commands needed!
@@ -374,7 +374,7 @@ export default function SettingsPage() {
       <Button
         onClick={handleSave}
         disabled={saving}
-        className="bg-orange-600 hover:bg-orange-700 text-white"
+        className="bg-copper-500 hover:bg-copper-600 text-white"
       >
         {saving ? (
           <Loader2 className="h-4 w-4 mr-2 animate-spin" />

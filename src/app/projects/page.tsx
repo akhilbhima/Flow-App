@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/db/schema";
 
 export default function ProjectsPage() {
@@ -34,17 +34,17 @@ export default function ProjectsPage() {
   };
 
   const priorityColor: Record<string, string> = {
-    critical: "bg-red-500/20 text-red-400 border-red-500/30",
-    high: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-    medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-    low: "bg-green-500/20 text-green-400 border-green-500/30",
+    critical: "bg-rust-50 text-rust-500 border-rust-200",
+    high: "bg-copper-50 text-copper-600 border-copper-200",
+    medium: "bg-amber-50 text-amber-500 border-amber-200",
+    low: "bg-moss-50 text-moss-500 border-moss-200",
   };
 
   const statusColor: Record<string, string> = {
-    active: "bg-green-500/20 text-green-400 border-green-500/30",
-    paused: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-    completed: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-    archived: "bg-neutral-500/20 text-neutral-400 border-neutral-500/30",
+    active: "bg-moss-50 text-moss-500 border-moss-200",
+    paused: "bg-amber-50 text-amber-500 border-amber-200",
+    completed: "bg-slate-50 text-slate-500 border-slate-200",
+    archived: "bg-slate-50 text-muted-foreground border-slate-200",
   };
 
   return (
@@ -52,10 +52,10 @@ export default function ProjectsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Projects</h1>
-          <p className="text-neutral-400 mt-1">All your goals and projects</p>
+          <p className="text-muted-foreground mt-1">All your goals and projects</p>
         </div>
         <a href="/projects/new">
-          <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+          <Button className="bg-copper-500 hover:bg-copper-600 text-white">
             <Plus className="h-4 w-4 mr-2" />
             New Project
           </Button>
@@ -63,16 +63,16 @@ export default function ProjectsPage() {
       </div>
 
       {loading ? (
-        <div className="text-neutral-400 py-8 text-center">Loading...</div>
+        <div className="text-muted-foreground py-8 text-center">Loading...</div>
       ) : projects.length === 0 ? (
-        <Card className="bg-neutral-900 border-neutral-800 border-dashed">
+        <Card className="bg-card border-border border-dashed">
           <CardContent className="py-12 text-center">
-            <p className="text-neutral-400 mb-4">
+            <p className="text-muted-foreground mb-4">
               No projects yet. Describe what you want to achieve and AI will
               break it down into actionable targets.
             </p>
             <a href="/projects/new">
-              <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+              <Button className="bg-copper-500 hover:bg-copper-600 text-white">
                 <Plus className="h-4 w-4 mr-2" />
                 Create Your First Project
               </Button>
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
         <div className="grid gap-4">
           {projects.map((project) => (
             <a key={project.id} href={`/projects/${project.id}`}>
-              <Card className="bg-neutral-900 border-neutral-800 hover:border-neutral-700 transition-colors cursor-pointer">
+              <Card className="bg-card border-border hover:border-copper-200 transition-colors cursor-pointer">
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">{project.title}</CardTitle>
@@ -102,7 +102,7 @@ export default function ProjectsPage() {
                       </Badge>
                       <button
                         onClick={(e) => handleDelete(project.id, e)}
-                        className="p-1 text-neutral-500 hover:text-red-400 transition-colors"
+                        className="p-1 text-muted-foreground hover:text-rust-500 transition-colors"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -110,9 +110,25 @@ export default function ProjectsPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-4 text-sm text-neutral-400">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     {project.description && (
                       <p className="truncate flex-1">{project.description}</p>
+                    )}
+                    {(project as Project & { notionPageUrl?: string }).notionPageUrl && (
+                      <span
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.open((project as Project & { notionPageUrl?: string }).notionPageUrl!, "_blank");
+                        }}
+                        className="shrink-0 inline-flex items-center gap-1 text-copper-500 hover:text-copper-600 transition-colors"
+                      >
+                        <svg className="h-3.5 w-3.5" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6.017 4.313l55.333-4.087c6.797-.583 8.543-.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277-1.553 6.807-6.99 7.193L24.467 99.967c-4.08.193-6.023-.39-8.16-3.113L3.3 79.94c-2.333-3.113-3.3-5.443-3.3-8.167V11.113c0-3.497 1.553-6.413 6.017-6.8z" fill="currentColor"/>
+                        </svg>
+                        Notion
+                        <ExternalLink className="h-3 w-3" />
+                      </span>
                     )}
                     {project.deadline && (
                       <span className="shrink-0">

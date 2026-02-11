@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { createMilestone, createManyTasks } from "@/lib/db/queries";
+import { createMilestone, createManyTasks, getProject, getMilestones, getTasks, updateProject } from "@/lib/db/queries";
 import { FLOW_FRAMEWORK_SYSTEM_PROMPT } from "@/lib/ai/system-prompt";
+import { syncProjectToNotion } from "@/lib/notion/sync";
 
 export async function POST(request: Request) {
   try {
@@ -115,6 +116,24 @@ ${deadline ? `- Front-load milestone dates before the deadline: ${deadline}` : "
           )
         );
       }
+    }
+
+    // Fire-and-forget Notion sync (don't block the response)
+    if (process.env.NOTION_API_KEY && process.env.NOTION_PROJECTS_DB_ID) {
+      (async () => {
+        try {
+          const project = await getProject(projectId);
+          const allMilestones = await getMilestones(projectId);
+          const allTasks = await getTasks(projectId);
+          if (project) {
+            const notionUrl = await syncProjectToNotion(project, allMilestones, allTasks);
+            await updateProject(projectId, { notionPageUrl: notionUrl } as Parameters<typeof updateProject>[1]);
+            console.log(`Notion sync complete for project ${projectId}: ${notionUrl}`);
+          }
+        } catch (notionErr) {
+          console.error("Notion sync failed (non-blocking):", notionErr);
+        }
+      })();
     }
 
     return NextResponse.json({ success: true, milestoneCount: data.milestones.length });

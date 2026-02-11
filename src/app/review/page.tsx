@@ -8,23 +8,23 @@ export default function ReviewPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">EOD Review</h1>
-        <p className="text-neutral-400 mt-1">
+        <p className="text-muted-foreground mt-1">
           End-of-day review and activation energy prep for tomorrow
         </p>
       </div>
 
-      <Card className="bg-neutral-900 border-neutral-800 border-dashed">
+      <Card className="bg-card border-border border-dashed">
         <CardContent className="py-16 text-center space-y-4">
           <div className="flex justify-center">
-            <div className="p-3 rounded-full bg-indigo-500/20">
-              <Moon className="h-8 w-8 text-indigo-500" />
+            <div className="p-3 rounded-full bg-slate-50">
+              <Moon className="h-8 w-8 text-slate-500" />
             </div>
           </div>
           <div>
-            <p className="text-lg font-medium text-neutral-300">
+            <p className="text-lg font-medium text-foreground">
               EOD Review coming in Phase 4
             </p>
-            <p className="text-sm text-neutral-500 mt-2">
+            <p className="text-sm text-muted-foreground mt-2">
               This will include:
               <br />
               • Task completion summary

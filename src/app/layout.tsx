@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -23,40 +23,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-950 text-neutral-50 min-h-screen`}
+        className={`${inter.variable} ${geistMono.variable} font-sans antialiased bg-background text-foreground min-h-screen`}
       >
-        <nav className="border-b border-neutral-800 px-6 py-4">
+        <nav className="border-b border-border bg-white/60 backdrop-blur-sm px-6 py-4 sticky top-0 z-50">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
             <a href="/" className="text-xl font-bold tracking-tight">
-              <span className="text-orange-500">Flow</span>{" "}
-              <span className="text-neutral-400 text-sm font-normal">
+              <span className="text-copper-500">Flow</span>{" "}
+              <span className="text-muted-foreground text-sm font-normal">
                 Anti-Procrastination
               </span>
             </a>
-            <div className="flex gap-6 text-sm">
+            <div className="flex gap-6 text-sm font-medium">
               <a
                 href="/"
-                className="text-neutral-400 hover:text-neutral-50 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 Dashboard
               </a>
               <a
                 href="/projects"
-                className="text-neutral-400 hover:text-neutral-50 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 Projects
               </a>
               <a
                 href="/today"
-                className="text-neutral-400 hover:text-neutral-50 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 Today
               </a>
               <a
                 href="/settings"
-                className="text-neutral-400 hover:text-neutral-50 transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 Settings
               </a>

@@ -40,7 +40,7 @@ function BlockDurationBadge({ project }: { project: Project }) {
   const mode = project.blockDurationMode || "120";
   if (mode === "auto") {
     return (
-      <span className="flex items-center gap-1 text-xs text-purple-400">
+      <span className="flex items-center gap-1 text-xs text-copper-500">
         <Brain className="h-3 w-3" />
         Auto
       </span>
@@ -48,7 +48,7 @@ function BlockDurationBadge({ project }: { project: Project }) {
   }
   if (mode === "custom") {
     return (
-      <span className="flex items-center gap-1 text-xs text-blue-400">
+      <span className="flex items-center gap-1 text-xs text-slate-500">
         <Clock className="h-3 w-3" />
         {project.blockDuration}m
       </span>
@@ -56,7 +56,7 @@ function BlockDurationBadge({ project }: { project: Project }) {
   }
   const mins = parseInt(mode) || 120;
   const Icon = mins <= 60 ? Zap : mins <= 90 ? Clock : Flame;
-  const color = mins <= 60 ? "text-yellow-400" : mins <= 90 ? "text-blue-400" : "text-red-400";
+  const color = mins <= 60 ? "text-amber-500" : mins <= 90 ? "text-slate-500" : "text-rust-500";
   return (
     <span className={`flex items-center gap-1 text-xs ${color}`}>
       <Icon className="h-3 w-3" />
@@ -122,14 +122,14 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
   };
 
   return (
-    <Card className="bg-neutral-900 border-neutral-800">
+    <Card className="bg-card border-border">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base text-neutral-300 flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-orange-400" />
+          <CardTitle className="text-base text-foreground flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-copper-500" />
             Today&apos;s Schedule
           </CardTitle>
-          <div className="flex items-center gap-3 text-xs text-neutral-500">
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span>{plan.totalBlocks} blocks</span>
             <span>&middot;</span>
             <span>{plan.totalTasks} tasks</span>
@@ -155,8 +155,8 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
               className="absolute top-0 h-full flex flex-col items-center"
               style={{ left: `${marker.position}%` }}
             >
-              <div className="w-px h-3 bg-neutral-700" />
-              <span className="text-[10px] text-neutral-600 mt-0.5">{marker.time}</span>
+              <div className="w-px h-3 bg-copper-100" />
+              <span className="text-[10px] text-muted-foreground mt-0.5">{marker.time}</span>
             </div>
           ))}
 
@@ -169,8 +169,8 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
                 key={block.blockNumber}
                 className={`absolute top-7 h-10 rounded-md flex items-center justify-center text-[10px] font-medium border cursor-default transition-all hover:brightness-125 ${
                   isDeep
-                    ? "bg-orange-500/20 border-orange-500/40 text-orange-300"
-                    : "bg-blue-500/20 border-blue-500/40 text-blue-300"
+                    ? "bg-copper-50 border-copper-200 text-copper-700"
+                    : "bg-slate-50 border-slate-200 text-slate-600"
                 }`}
                 style={{
                   left: `${pos.left}%`,
@@ -202,7 +202,7 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
             return (
               <div
                 key={`break-${idx}`}
-                className="absolute top-7 h-10 rounded-md flex items-center justify-center text-[10px] bg-neutral-800/50 border border-neutral-700/30 text-neutral-600"
+                className="absolute top-7 h-10 rounded-md flex items-center justify-center text-[10px] bg-muted/50 border border-copper-200 text-muted-foreground"
                 style={{ left: `${left}%`, width: `${Math.max(width, 2)}%` }}
                 title={`Break: ${formatTimeLabel(block.endTime)} - ${formatTimeLabel(nextBlock.startTime)}`}
               >
@@ -214,24 +214,24 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
 
         {/* Legend + CTA */}
         <div className="flex items-center justify-between mt-2">
-          <div className="flex items-center gap-4 text-[10px] text-neutral-500">
+          <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
             <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-sm bg-orange-500/30 border border-orange-500/50" />
+              <span className="w-2.5 h-2.5 rounded-sm bg-copper-50 border border-copper-200" />
               Deep Work
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-sm bg-blue-500/30 border border-blue-500/50" />
+              <span className="w-2.5 h-2.5 rounded-sm bg-slate-50 border border-slate-200" />
               Shallow Work
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-sm bg-neutral-800 border border-neutral-700/50" />
+              <span className="w-2.5 h-2.5 rounded-sm bg-white border border-copper-200" />
               Break
             </span>
           </div>
           <a href="/today">
             <Button
               size="sm"
-              className="bg-orange-600 hover:bg-orange-700 text-white text-xs h-7"
+              className="bg-copper-500 hover:bg-copper-600 text-white text-xs h-7"
             >
               <Play className="h-3 w-3 mr-1" />
               Go to Today
@@ -247,19 +247,19 @@ function ScheduleTimeline({ plan }: { plan: DayPlan }) {
               className="flex items-center gap-2 text-xs"
             >
               <span className={`shrink-0 w-1.5 h-1.5 rounded-full ${
-                block.blockType === "deep_work" ? "bg-orange-400" : "bg-blue-400"
+                block.blockType === "deep_work" ? "bg-copper-500" : "bg-slate-400"
               }`} />
-              <span className="text-neutral-500 w-14 shrink-0">
+              <span className="text-muted-foreground w-14 shrink-0">
                 {formatTimeLabel(block.startTime)}
               </span>
-              <span className="text-neutral-300 font-medium">
+              <span className="text-foreground font-medium">
                 Block {block.blockNumber}
               </span>
-              <span className="text-neutral-600">&middot;</span>
-              <span className="text-neutral-400 truncate">
+              <span className="text-muted-foreground">&middot;</span>
+              <span className="text-muted-foreground truncate">
                 {block.tasks.map((st) => st.task.title).join(", ")}
               </span>
-              <span className="ml-auto shrink-0 text-neutral-600">
+              <span className="ml-auto shrink-0 text-muted-foreground">
                 {block.totalMinutes}m
               </span>
             </div>
@@ -310,10 +310,10 @@ export default function Dashboard() {
   const activeProjects = projects.filter((p) => p.status === "active");
 
   const priorityColor: Record<string, string> = {
-    critical: "bg-red-500/20 text-red-400 border-red-500/30",
-    high: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-    medium: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-    low: "bg-green-500/20 text-green-400 border-green-500/30",
+    critical: "bg-rust-50 text-rust-500 border-rust-200",
+    high: "bg-copper-50 text-copper-500 border-copper-200",
+    medium: "bg-amber-50 text-amber-500 border-amber-200",
+    low: "bg-moss-50 text-moss-500 border-moss-200",
   };
 
   return (
@@ -321,7 +321,7 @@ export default function Dashboard() {
       {/* Hero Section */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-neutral-400">
+        <p className="text-muted-foreground">
           Your anti-procrastination command center. Targets, not outcomes.
         </p>
       </div>
@@ -330,16 +330,16 @@ export default function Dashboard() {
       {todayPlan ? (
         <ScheduleTimeline plan={todayPlan} />
       ) : (
-        <Card className="bg-neutral-900 border-neutral-800 border-dashed">
+        <Card className="bg-card border-border border-dashed">
           <CardContent className="py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-orange-500/10">
-                  <Calendar className="h-5 w-5 text-orange-400" />
+                <div className="p-2 rounded-lg bg-copper-50">
+                  <Calendar className="h-5 w-5 text-copper-500" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-neutral-300">Today&apos;s Schedule</p>
-                  <p className="text-xs text-neutral-500">
+                  <p className="text-sm font-medium text-foreground">Today&apos;s Schedule</p>
+                  <p className="text-xs text-muted-foreground">
                     Preview your day or head to Today to start working
                   </p>
                 </div>
@@ -350,7 +350,7 @@ export default function Dashboard() {
                   variant="outline"
                   onClick={loadSchedulePreview}
                   disabled={planLoading}
-                  className="border-neutral-700 text-neutral-300 hover:bg-neutral-800"
+                  className="border-copper-200 text-foreground hover:bg-muted"
                 >
                   {planLoading ? (
                     <>
@@ -367,7 +367,7 @@ export default function Dashboard() {
                 <a href="/today">
                   <Button
                     size="sm"
-                    className="bg-orange-600 hover:bg-orange-700 text-white"
+                    className="bg-copper-500 hover:bg-copper-600 text-white"
                   >
                     <ArrowRight className="h-4 w-4 mr-1" />
                     Plan My Day
@@ -381,30 +381,30 @@ export default function Dashboard() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-card border-border">
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-orange-500/20">
-                <Target className="h-5 w-5 text-orange-500" />
+              <div className="p-2 rounded-lg bg-copper-50">
+                <Target className="h-5 w-5 text-copper-500" />
               </div>
               <div>
                 <p className="text-2xl font-bold">{activeProjects.length}</p>
-                <p className="text-sm text-neutral-400">Active Projects</p>
+                <p className="text-sm text-muted-foreground">Active Projects</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-neutral-900 border-neutral-800">
+        <Card className="bg-card border-border">
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-red-500/20">
-                <Flame className="h-5 w-5 text-red-500" />
+              <div className="p-2 rounded-lg bg-rust-50">
+                <Flame className="h-5 w-5 text-rust-500" />
               </div>
               <div>
                 <p className="text-2xl font-bold">
                   {todayPlan ? todayPlan.totalBlocks : "--"}
                 </p>
-                <p className="text-sm text-neutral-400">
+                <p className="text-sm text-muted-foreground">
                   {todayPlan ? "Blocks Scheduled" : "Flow Sessions Today"}
                 </p>
               </div>
@@ -418,7 +418,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold">Active Projects</h2>
           <a href="/projects/new">
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+            <Button className="bg-copper-500 hover:bg-copper-600 text-white">
               <Plus className="h-4 w-4 mr-2" />
               New Project
             </Button>
@@ -426,15 +426,15 @@ export default function Dashboard() {
         </div>
 
         {loading ? (
-          <div className="text-neutral-400 py-8 text-center">Loading...</div>
+          <div className="text-muted-foreground py-8 text-center">Loading...</div>
         ) : activeProjects.length === 0 ? (
-          <Card className="bg-neutral-900 border-neutral-800 border-dashed">
+          <Card className="bg-card border-border border-dashed">
             <CardContent className="py-12 text-center">
-              <p className="text-neutral-400 mb-4">
+              <p className="text-muted-foreground mb-4">
                 No projects yet. Add your first goal to get started.
               </p>
               <a href="/projects/new">
-                <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+                <Button className="bg-copper-500 hover:bg-copper-600 text-white">
                   <Plus className="h-4 w-4 mr-2" />
                   Create Your First Project
                 </Button>
@@ -445,7 +445,7 @@ export default function Dashboard() {
           <div className="grid gap-4">
             {activeProjects.map((project) => (
               <a key={project.id} href={`/projects/${project.id}`}>
-                <Card className="bg-neutral-900 border-neutral-800 hover:border-neutral-700 transition-colors cursor-pointer">
+                <Card className="bg-card border-border hover:border-copper-200 transition-colors cursor-pointer">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-lg">{project.title}</CardTitle>
@@ -461,7 +461,7 @@ export default function Dashboard() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-4 text-sm text-neutral-400">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       {project.description && (
                         <p className="truncate flex-1">
                           {project.description}

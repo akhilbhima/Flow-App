@@ -87,6 +87,8 @@ export const projects = pgTable("projects", {
   blockDurationMode: text("block_duration_mode").default("120").notNull(),
   /** Custom block duration in minutes (used when mode is "custom") */
   blockDuration: integer("block_duration").default(120).notNull(),
+  /** Notion page URL (set after Notion sync) */
+  notionPageUrl: text("notion_page_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
